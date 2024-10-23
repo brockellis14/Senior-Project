@@ -26,11 +26,18 @@ jobs:
     - name: Run data fetching script
       run: python data_fetch.py
 
+    - name: Check for changes in map_data.js
+      run: |
+        git diff --exit-code map_data.js || echo "Changes detected"
+      id: check_changes
+      continue-on-error: true
+
     - name: Commit and push the updated map_data.js
+      if: steps.check_changes.outcome == 'failure'  # Only commit if changes were detected
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "GitHub Actions"
         git add map_data.js
         git commit -m "Automated update of map_data.js"
         git push
-      continue-on-error: true  # Prevent failure if no changes
+
