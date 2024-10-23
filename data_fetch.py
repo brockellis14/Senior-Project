@@ -182,9 +182,9 @@ if usgs_gauges_data is not None:
 
         try:
             # Extract observed flow data for USGS
-            flow_data = site['value']
-            observed_flow = flow_data.get('value', 'N/A')
-            unit = site['variable']['unit']['unitCode']
+            flow_data = site.get('value', {})
+            observed_flow = flow_data.get('value', 'N/A')  # Handle missing value field safely
+            unit = site['variable']['unit'].get('unitCode', 'N/A')  # Safely handle unitCode
 
             # Check if location already exists
             existing_location = find_existing_location(map_data, latitude, longitude)
