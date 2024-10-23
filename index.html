@@ -68,12 +68,13 @@
                 return; // Skip this site if the coordinates are invalid
             }
 
-            // Fallback for missing values
-            var observedFlow = site.observed_flow ? site.observed_flow : 'N/A';
-            var forecastFlow = site.forecast_flow ? site.forecast_flow : 'N/A';
-            var observedTime = site.observed_time ? site.observed_time : 'N/A';
-            var forecastTime = site.forecast_time ? site.forecast_time : 'N/A';
-            var unit = site.unit ? site.unit : 'N/A';
+            // Fallback for missing values and handle both NOAA and USGS data
+            var noaaObservedFlow = site.noaa_observed_flow ? site.noaa_observed_flow : 'N/A';
+            var usgsObservedFlow = site.usgs_observed_flow ? site.usgs_observed_flow : 'N/A';
+            var noaaForecastFlow = site.noaa_forecast_flow ? site.noaa_forecast_flow : 'N/A';
+            var unit = site.noaa_unit || site.usgs_unit || 'N/A'; // Use NOAA unit if available, else USGS unit
+            var noaaObservedTime = site.noaa_observed_time ? site.noaa_observed_time : 'N/A';
+            var usgsObservedTime = site.usgs_observed_time ? site.usgs_observed_time : 'N/A';
 
             // Debugging: Log the site info
             console.log(`Adding marker for: ${site.site_name}`, site);
@@ -81,14 +82,14 @@
             // Add marker to the map
             var marker = L.marker([site.latitude, site.longitude], { icon: customIcon }).addTo(map);
 
-            // Bind popup with flow data
+            // Bind popup with flow data, showing both NOAA and USGS data where available
             marker.bindPopup(
                 `<div>
                     <strong>${site.site_name}</strong><br>
-                    <strong>Observed Flow:</strong> ${observedFlow} ${unit}<br>
-                    <strong>Observed Time:</strong> ${observedTime}<br>
-                    <strong>Forecast Flow:</strong> ${forecastFlow} ${unit}<br>
-                    <strong>Forecast Time:</strong> ${forecastTime}
+                    <strong>NOAA Observed Flow:</strong> ${noaaObservedFlow} ${unit}<br>
+                    <strong>NOAA Observed Time:</strong> ${noaaObservedTime}<br>
+                    <strong>USGS Observed Flow:</strong> ${usgsObservedFlow} ${unit}<br>
+                    <strong>USGS Observed Time:</strong> ${usgsObservedTime}<br>
                 </div>`
             );
         });
