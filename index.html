@@ -33,6 +33,13 @@
     <script src="map_data.js"></script>
 
     <script>
+        // Check if mapData is loaded correctly from map_data.js
+        if (typeof mapData === 'undefined' || !Array.isArray(mapData)) {
+            console.error("mapData is not loaded or is not in the correct format.");
+        } else {
+            console.log("mapData loaded successfully:", mapData);
+        }
+
         // Initialize the map and set the default view
         var map = L.map('map').setView([43.82, -111.79], 5); // Adjust to a center location
 
@@ -55,14 +62,33 @@
 
         // Loop through the mapData array (loaded from map_data.js) and add markers
         mapData.forEach(function(site) {
+            // Ensure latitude and longitude are valid numbers
+            if (typeof site.latitude !== 'number' || typeof site.longitude !== 'number') {
+                console.error(`Invalid latitude or longitude for site: ${site.site_name}`);
+                return; // Skip this site if the coordinates are invalid
+            }
+
+            // Fallback for missing values
+            var observedFlow = site.observed_flow ? site.observed_flow : 'N/A';
+            var forecastFlow = site.forecast_flow ? site.forecast_flow : 'N/A';
+            var observedTime = site.observed_time ? site.observed_time : 'N/A';
+            var forecastTime = site.forecast_time ? site.forecast_time : 'N/A';
+            var unit = site.unit ? site.unit : 'N/A';
+
+            // Debugging: Log the site info
+            console.log(`Adding marker for: ${site.site_name}`, site);
+
+            // Add marker to the map
             var marker = L.marker([site.latitude, site.longitude], { icon: customIcon }).addTo(map);
+
+            // Bind popup with flow data
             marker.bindPopup(
                 `<div>
                     <strong>${site.site_name}</strong><br>
-                    <strong>Observed Flow:</strong> ${site.observed_flow} ${site.unit}<br>
-                    <strong>Observed Time:</strong> ${site.observed_time}<br>
-                    <strong>Forecast Flow:</strong> ${site.forecast_flow} ${site.unit}<br>
-                    <strong>Forecast Time:</strong> ${site.forecast_time}
+                    <strong>Observed Flow:</strong> ${observedFlow} ${unit}<br>
+                    <strong>Observed Time:</strong> ${observedTime}<br>
+                    <strong>Forecast Flow:</strong> ${forecastFlow} ${unit}<br>
+                    <strong>Forecast Time:</strong> ${forecastTime}
                 </div>`
             );
         });
