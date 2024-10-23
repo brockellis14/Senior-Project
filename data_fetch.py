@@ -35,9 +35,10 @@ def fetch_gauge_data(params, max_retries=5, retry_delay=5):
     print(f"Failed to fetch gauge data after {max_retries} attempts.")
     return None
 
+
 # Function to fetch stageflow data for a specific gauge
 def fetch_flow_data(gauge_id, max_retries=5, retry_delay=5):
-    stageflow_url = f"{base_url}/gauges/{gauge_id}/stageflow"
+    stageflow_url = f"{base_url}/gauges/{gauge_id}/stageflow
     
     for attempt in range(max_retries):
         try:
