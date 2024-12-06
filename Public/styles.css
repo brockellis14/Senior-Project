@@ -1,0 +1,102 @@
+/* styles.css */
+body {
+    font-family: 'Georgia', serif;
+    margin: 0;
+    background-color: #f8f8f0;
+    color: #334d26;
+    text-align: center;
+}
+
+.header {
+    width: 100%;
+}
+
+.header-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.container {
+    background-color: #f0f6ed;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #334d26;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.center-image {
+    margin: 10px 0;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.intro {
+    font-size: 1.1rem;
+    margin: 20px 0;
+    color: #334d26;
+    line-height: 1.5;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #334d26;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+
+button {
+    background-color: #334d26;
+    color: #ffffff;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #436a3d;
+}
+
+p#message {
+    margin-top: 15px;
+    color: red;
+    font-weight: bold;
+}
+
+footer {
+    margin-top: 30px;
+    background-color: #334d26;
+    color: #ffffff;
+    padding: 15px 0;
+    font-size: 0.9rem;
+    border-radius: 0 0 12px 12px;
+}
